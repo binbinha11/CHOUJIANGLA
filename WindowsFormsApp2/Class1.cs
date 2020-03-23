@@ -255,7 +255,7 @@ namespace WindowsFormsApp2
             i = r.Next(0,5);
             switch (i){
                 case 0:
-                    q = 'a';
+                    q = 'a'; 
                     array = a;
                     break;
                 case 1:
