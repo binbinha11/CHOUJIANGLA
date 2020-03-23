@@ -384,7 +384,7 @@ namespace WindowsFormsApp2
         }
         public void ShapeToAll(int[,] array) {
             while (array.GetLength(1) + y > width)
-            { 
+            {
                 y--;
             }
             for (int k = 0 + x; k < array.Length / (array.GetLength(1)) + x; k++)
