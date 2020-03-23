@@ -187,13 +187,16 @@ namespace WindowsFormsApp2
                     }
                     break;
             }
-            shapeall = array;
+            if (array.Length != 16)
+            {
+                shapeall = array;
+            }
+            
 
         }
         public Boolean start() {  //下落
             int index = 0;
             bool flag = true;
-            int[,] array = new int[4, 4];
             for (int i = 0 + x; i < x + shapeall.Length/shapeall.GetLength(1); i++)
             {
                 for (int j = 0 + y; j < y + shapeall.GetLength(1); j++)
@@ -252,7 +255,7 @@ namespace WindowsFormsApp2
             int i;
             int[,] array = new int[4, 4];
             Random r = new Random();
-            i = r.Next(0,5);
+            i = r.Next(0,6);
             switch (i){
                 case 0:
                     q = 'a'; 
@@ -273,6 +276,10 @@ namespace WindowsFormsApp2
                 case 4:
                     q = 'd';
                     array = d;
+                    break;
+                case 5:
+                    q = 'h';
+                    array = h;
                     break;
             }
 
@@ -345,21 +352,19 @@ namespace WindowsFormsApp2
 
         }
         public Boolean ClearZero(int x,int y,int w,int h,int[,] array) {
-            int indexy;
             if (x + array.Length / array.GetLength(1) > height)
             {
                 return false;
             }
             for (int i = x; i < x + array.Length / array.GetLength(1); i++)
-            {
+            { 
                 for (int j = y; j < y + array.GetLength(1); j++)
                 {
-                    indexy = j;
-                    while (indexy >= width)
+                    if (j >= width)
                     {
-                        indexy--;
+                        return false;
                     }
-                    if (all[i, indexy] == 3 && array[i - x, indexy - y] == 1)
+                    if (all[i, j] == 3 && array[i - x, j - y] == 1)
                     {
                         return false;
                     }
@@ -386,7 +391,10 @@ namespace WindowsFormsApp2
             {
                 for (int j = 0 + y; j < array.GetLength(1) + y; j++)
                 {
-                    all[k, j] = array[k-x, j-y];
+                    if (all[k, j] != 3)
+                    {
+                        all[k, j] = array[k - x, j - y];
+                    }
                 }
             }
         }
