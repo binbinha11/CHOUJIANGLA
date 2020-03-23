@@ -345,6 +345,7 @@ namespace WindowsFormsApp2
 
         }
         public Boolean ClearZero(int x,int y,int w,int h,int[,] array) {
+            int indexy;
             if (x + array.Length / array.GetLength(1) > height)
             {
                 return false;
@@ -353,7 +354,12 @@ namespace WindowsFormsApp2
             {
                 for (int j = y; j < y + array.GetLength(1); j++)
                 {
-                    if (all[i, j] == 3 && array[i - x, j - y] == 1)
+                    indexy = j;
+                    while (indexy >= width)
+                    {
+                        indexy--;
+                    }
+                    if (all[i, indexy] == 3 && array[i - x, indexy - y] == 1)
                     {
                         return false;
                     }
@@ -372,7 +378,7 @@ namespace WindowsFormsApp2
             return true;
         }
         public void ShapeToAll(int[,] array) {
-            if (array.GetLength(1) + y > width)
+            while (array.GetLength(1) + y > width)
             {
                 y--;
             }
