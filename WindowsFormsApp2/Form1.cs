@@ -24,36 +24,13 @@ namespace WindowsFormsApp2
         public Form1()
         {
             InitializeComponent();
-            //dataGridView1.RowCount = 10;
-            //dataGridView1.ColumnCount = 2;
-            //dataGridView1.Columns[0].HeaderCell.Value = "编号";
-            //dataGridView1.Columns[1].HeaderCell.Value = "名称";
+            this.SetBounds((Screen.GetBounds(this).Width / 2) - (this.Width / 2),
+                (Screen.GetBounds(this).Height / 2) - (this.Height / 2),
+                this.Width, this.Height, BoundsSpecified.Location);
         }
 
         private void button1_Click(object sender, MouseEventArgs e)
         {
-            ////获取进程名称
-            //string ProcessName = textBox1.Text;
-            ////创建Process 类的对象
-            //Process p = new Process();
-            ////设置进程名称
-            //p.StartInfo.FileName = ProcessName;
-            ////启动进程
-            //p.Start();
-            //Image image = Image.FromFile("C:\\Users\\lizb2\\Desktop\\无标题.jpg");
-            //this.BackgroundImage = image;
-            //int x, y;
-            //int x1, y1;
-            ////button1.Top = 100;
-            ////button1.Left = 100;
-            //Point screenPoint = Control.MousePosition;//鼠标相对于屏幕左上角的坐标
-            //x1 = screenPoint.X;
-            //y1 = screenPoint.Y;
-
-
-            //Point button1Point = button1.PointToClient(Control.MousePosition); //鼠标相对于button1左上角的坐标
-            //x = button1Point.X;
-            //y = button1Point.Y;
             timer1.Start();
         }
 
@@ -61,29 +38,8 @@ namespace WindowsFormsApp2
         {
             timer1.Interval = 1000;
         }
-
-        private void FormMouseMove(object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            
-        }
-
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-        private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e) {
-
-        }
-
         private void Multiple()
         {
-            ;
             width = dataGridView1.Width;
             height = dataGridView1.Height;
             w = dataGridView1.Width / 10;
@@ -137,17 +93,18 @@ namespace WindowsFormsApp2
             {
                 case Keys.Up:      //   ↑键 转方向
                     class1.ChangedShape();
-                    this.dataGridView1.Refresh();
                     break;
                 case Keys.Down:    //   ↓键
+                    class1.start();
                     break;
                 case Keys.Left:    //   ←键
                     class1.Left();
-                    this.dataGridView1.Refresh();
                     break;
                 case Keys.Right:   //   →键
+                    class1.Right();    
                     break;
             }
+            this.dataGridView1.Refresh();
             return true;
         }
 
