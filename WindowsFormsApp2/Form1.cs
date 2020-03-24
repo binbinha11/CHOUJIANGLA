@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace WindowsFormsApp2
         int w;
         int h;
         static bool start = false;
+        public TextureBrush Txbrus;
         Class1 class1 = new Class1();
         List<Rectangle> l = new List<Rectangle>();
         Rectangle r;
@@ -28,6 +30,11 @@ namespace WindowsFormsApp2
             this.SetBounds((Screen.GetBounds(this).Width / 2) - (this.Width / 2),
                 (Screen.GetBounds(this).Height / 2) - (this.Height / 2),
                 this.Width, this.Height, BoundsSpecified.Location);
+            Bitmap b = new Bitmap("C:\\Users\\lizb2\\Desktop\\1.jpg");
+            //FileStream file = new FileStream("C:\\Users\\lizb2\\Desktop\\1.jpg", FileMode.Open);
+            //Image image = Image.FromStream(file);
+            Txbrus = new TextureBrush(b);
+            Txbrus.WrapMode = System.Drawing.Drawing2D.WrapMode.Tile;
         }
 
         private void button1_Click(object sender, MouseEventArgs e)
@@ -74,13 +81,13 @@ namespace WindowsFormsApp2
         }
         private void DatagirdView1_Paint(object sender, PaintEventArgs e)
         {
-            
             l = class1.ArrayToRectangle(Class1.all);
             this.Multiple();
             DrawGrid(width, height, w, h, e);
             foreach (Rectangle r1 in l)
             {
-               e.Graphics.FillRectangle(new SolidBrush(Color.Black), r1);
+                e.Graphics.FillRectangle(new SolidBrush(Color.Black), r1);
+                //e.Graphics.FillRectangle(Txbrus, r1);
             }
         }
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
