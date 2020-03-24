@@ -30,11 +30,11 @@ namespace WindowsFormsApp2
             this.SetBounds((Screen.GetBounds(this).Width / 2) - (this.Width / 2),
                 (Screen.GetBounds(this).Height / 2) - (this.Height / 2),
                 this.Width, this.Height, BoundsSpecified.Location);
-            Bitmap b = new Bitmap("C:\\Users\\lizb2\\Desktop\\1.jpg");
+            //Bitmap b = new Bitmap("C:\\Users\\lizb2\\Desktop\\1.jpg");
             //FileStream file = new FileStream("C:\\Users\\lizb2\\Desktop\\1.jpg", FileMode.Open);
             //Image image = Image.FromStream(file);
-            Txbrus = new TextureBrush(b);
-            Txbrus.WrapMode = System.Drawing.Drawing2D.WrapMode.Tile;
+            //Txbrus = new TextureBrush(b);
+            //Txbrus.WrapMode = System.Drawing.Drawing2D.WrapMode.Tile;
         }
 
         private void button1_Click(object sender, MouseEventArgs e)
@@ -123,7 +123,8 @@ namespace WindowsFormsApp2
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            this.textBox1.Text = class1.AddCore().ToString();
+            
+            this.textBox1.Text = class1.core.ToString();
             if (class1.start()){
                 start = true;
                 this.dataGridView1.Refresh();
@@ -141,6 +142,7 @@ namespace WindowsFormsApp2
             timer1.Stop();
             start = false;
             class1.ReStart();
+            this.dataGridView1.Refresh();
         }
     }
 }
