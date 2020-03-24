@@ -18,7 +18,7 @@ namespace WindowsFormsApp2
         int height;
         int w;
         int h;
-        static bool start = false;
+        public static bool start = false;
         public TextureBrush Txbrus;
         Class1 class1 = new Class1();
         List<Rectangle> l = new List<Rectangle>();
@@ -123,10 +123,10 @@ namespace WindowsFormsApp2
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            this.textBox1.Text = class1.AddCore().ToString();
             if (class1.start()){
                 start = true;
                 this.dataGridView1.Refresh();
-                class1.AddCore();
             }
             else {
                 MessageBox.Show("OVER!");

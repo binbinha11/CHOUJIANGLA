@@ -408,7 +408,7 @@ namespace WindowsFormsApp2
                 }
             }
         }
-        public void AddCore() {
+        public int AddCore() {
             int i = height - 1,j = 0;
             while (i >= 0)
             {
@@ -416,18 +416,19 @@ namespace WindowsFormsApp2
                 {
                     if (all[i,j] != 3)
                     {
-                        return;
+                        return core;
                     }
                 }
                 for (j = 0; j < width; j++)
                 {
-                    if (all[i - 1, j] == 3)
+                    if (all[i - 1, j] == 3 || all[i - 1, j] == 3 )
                     {
                         all[i, j] = all[i - 1, j];
                     }
                 }
                 core += 10;
             }
+            return core;
         }
         public void ReStart() {
             for (int i = 0; i < height; i++)
