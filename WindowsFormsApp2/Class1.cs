@@ -11,6 +11,7 @@ namespace WindowsFormsApp2
     {
         static int width = 10;
         static int height = 15;
+        static int core;
         int x, y;
         char q;
         public int[,]shapeall = new int[4,4];
@@ -27,7 +28,7 @@ namespace WindowsFormsApp2
         static public int[,] m = new int[2, 3] { { 1, 1, 1 }, { 0, 0, 1 } };
         static public int[,] n = new int[2, 3] { { 0, 1, 0 }, { 1, 1, 1 } };
         static public int[,] o = new int[2, 3] { { 1, 1, 1 }, { 0, 1, 0 } };
-        static public int[,] g = new int[2, 4]{ { 1, 1, 1, 1 },{ 0, 0, 0, 0 } };
+        static public int[,] g = new int[1, 4]{ { 1, 1, 1, 1 } };
         static public int[,] h = new int[4, 1] { { 1 }, { 1 }, { 1 },{ 1 } };
         static public int[,] i = new int[2, 2] { { 1, 1 }, { 1, 1 }};
         public static int[,]all = new int[height, width];
@@ -35,6 +36,7 @@ namespace WindowsFormsApp2
         public Class1() {
             x = 0;
             y = 0;
+            core = 0;
             for (int i = 0; i < height; i++)
             {
                 for (int j = 0; j < width; j++)
@@ -171,7 +173,7 @@ namespace WindowsFormsApp2
                     }
                     break;
                 case 'g':
-                    if (ClearZero(x, y, 4, 2, h))
+                    if (ClearZero(x, y, 4, 1, h))
                     {
                         q = 'h';
                         array = h;
@@ -299,11 +301,15 @@ namespace WindowsFormsApp2
             {
                 return;
             }
-            for (int i = 0 + x; i < x + shapeall.Length / shapeall.GetLength(1); i++)
+            for (int i = x; i < x + shapeall.Length / shapeall.GetLength(1); i++)
             {
-                for (int j = 0 + y; j < y + shapeall.GetLength(1); j++)
+                for (int j = y; j < y + shapeall.GetLength(1); j++)
                 {
-                    if (all[x, y - 1] == 3 && all[x, y] == 1){
+                    if (all[i, j - 1] != 3 && all[i, j] == 1)
+                    {
+                        break;
+                    }
+                    if (all[i, j - 1] == 3 && all[i, j] == 1){
                         return;
                     }
                 }
@@ -327,11 +333,15 @@ namespace WindowsFormsApp2
             {
                 return;
             }
-            for (int i = 0 + x; i < x + shapeall.Length / shapeall.GetLength(1); i++)
+            for (int i = x; i < x + shapeall.Length / shapeall.GetLength(1); i++)
             {
-                for (int j = y + shapeall.GetLength(1) - 1 + y; j >= y; j--)
+                for (int j = y + shapeall.GetLength(1) - 1; j >= y; j--)
                 {
-                    if (all[x, y + 1] == 3 && all[x, y] == 1)
+                    if (all[i, j] == 1 && all[i, j + 1] != 3)
+                    {
+                        break;
+                    }
+                    if (all[i, j + 1] == 3 && all[i, j] == 1)
                     {
                         return;
                     }
@@ -398,6 +408,35 @@ namespace WindowsFormsApp2
                 }
             }
         }
-
+        public void AddCore() {
+            int i = height - 1,j = 0;
+            while (i >= 0)
+            {
+                for (j = 0; j < width; j++)
+                {
+                    if (all[i,j] != 3)
+                    {
+                        return;
+                    }
+                }
+                for (j = 0; j < width; j++)
+                {
+                    if (all[i - 1, j] == 3)
+                    {
+                        all[i, j] = all[i - 1, j];
+                    }
+                }
+                core += 10;
+            }
+        }
+        public void ReStart() {
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    all[i, j] = 0;
+                }  
+            }
+        }
     }
 }

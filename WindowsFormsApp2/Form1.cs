@@ -17,6 +17,7 @@ namespace WindowsFormsApp2
         int height;
         int w;
         int h;
+        static bool start = false;
         Class1 class1 = new Class1();
         List<Rectangle> l = new List<Rectangle>();
         Rectangle r;
@@ -95,7 +96,12 @@ namespace WindowsFormsApp2
                     class1.ChangedShape();
                     break;
                 case Keys.Down:    //   ↓键
-                    class1.start();
+                    if (start){
+                        class1.start();
+                    }
+                    else {
+                        MessageBox.Show("NO START!");
+                    }      
                     break;
                 case Keys.Left:    //   ←键
                     class1.Left();
@@ -111,13 +117,23 @@ namespace WindowsFormsApp2
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (class1.start()){
+                start = true;
                 this.dataGridView1.Refresh();
+                class1.AddCore();
             }
             else {
                 MessageBox.Show("OVER!");
                 timer1.Stop();
+                start = false;
             }
             
+        }
+
+        private void Button2_Click(object sender, MouseEventArgs e)
+        {
+            timer1.Stop();
+            start = false;
+            class1.ReStart();
         }
     }
 }
