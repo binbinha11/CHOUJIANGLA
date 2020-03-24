@@ -247,6 +247,7 @@ namespace WindowsFormsApp2
                 y = 4;
                 if (IsOver())
                 {
+                    core = 0;
                     return false;
                 }
                 this.CreateShape();
@@ -431,6 +432,7 @@ namespace WindowsFormsApp2
             return core;
         }
         public void ReStart() {
+            core = 0;
             for (int i = 0; i < height; i++)
             {
                 for (int j = 0; j < width; j++)
