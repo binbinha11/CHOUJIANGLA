@@ -16,7 +16,35 @@ public class Myclass
     private static byte[] result = new byte[1024];
     static void Main(string[] args)
     {
-        SocketServie();
+        int i = 2032,j=0,k=0;
+        
+        int[,] array = new int[,] { { 1, 2, 3, 4 },{ 1,2,3,4} };
+        int[,] array2 = new int[2,4];
+        byte[] b = BitConverter.GetBytes(i);
+        Console.WriteLine("byte:{0}",b);
+        byte[] c = Array2Bytes(array);
+        Console.WriteLine("cbyte:{0}", c);
+        byte[] d = new byte[4];
+        for (int q = 0; q < 32; q++)
+        {       
+            d[q % 4] = c[q];
+            if (q % 4 == 3)
+            {
+                array2[k, j] = BitConverter.ToInt32(d, 0);
+                j++;
+                d[0] = 0;
+                d[1] = 0;
+                d[2] = 0;
+                d[3] = 0;
+                if (j%4 == 0)
+                {
+                    k ++;
+                    j = 0;
+                }
+             }
+        }
+        
+        //SocketServie();
     }
     public static void SocketServie()
     {
@@ -74,10 +102,18 @@ public class Myclass
                 //bs1 = new ArraySegment<byte>(Encoding.UTF8.GetBytes("bbbbbbbbbbbbb"));
                 //byteList.Add(bs1);
                 //myClientSocket.Send(byteList);
+                int[,] arrInt = new int[3, 4];
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 4; j++)
+                    {
+                        arrInt[i, j] = (i + 1) * (j + 1);
+                    }
+                }
+                byte[] bytes = Array2Bytes(arrInt);
                 byte[] vs = new byte[4];
                 int jj = 123;
                 vs = BitConverter.GetBytes(jj);
-                myClientSocket.Send(vs);
+                myClientSocket.Send(bytes);
                 myClientSocket.Close(); //发送完数据关闭Socket并释放资源
                 Console.ReadLine();
             }
@@ -90,7 +126,7 @@ public class Myclass
             }
         }
     }
-    byte[] Array2Bytes(int[,] array){
+    public static byte[] Array2Bytes(int[,] array){
         byte[] bytes = new byte[4 * array.Length / array.GetLength(1) * array.GetLength(1)];
         int n = 0;
         for (int i = 0; i < array.Length / array.GetLength(1); i++)
@@ -106,7 +142,7 @@ public class Myclass
         return bytes;
     }
 
-    private void Form1_Load(object sender, EventArgs e){
+    private static void Form1_Load(){
         int[,] arrInt = new int[3, 4];
         for (int i = 0; i < 3; i++)
             for (int j = 0; j < 4; j++)

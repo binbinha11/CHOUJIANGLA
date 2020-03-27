@@ -36,7 +36,7 @@ namespace WindowsFormsApp2
         static public int[,] i = new int[2, 2] { { 1, 1 }, { 1, 1 }};
 
         public static int[,]all = new int[height, width];
-        
+        public static int[,] all2 = new int[height, width];
         public Class1() {
             x = 0;
             y = 0;
@@ -51,7 +51,7 @@ namespace WindowsFormsApp2
             this.CreateShape();
 
         }
-        public List<Rectangle> ArrayToRectangle(int[,] array) {
+        public List<Rectangle> ArrayToRectangle(int[,] array,int length) {
             List<Rectangle> l = new List<Rectangle>();
             for (int i = 0; i <= height - 1; i++)
             {
@@ -59,7 +59,7 @@ namespace WindowsFormsApp2
                 {
                     if (array[i,j] % 2 == 1)
                     {
-                        Rectangle r = new Rectangle((j) * 25 , (i) * 25 , 25 ,25);
+                        Rectangle r = new Rectangle((j) * length, (i) * length, length, length);
                         l.Add(r);
                     }
                 }

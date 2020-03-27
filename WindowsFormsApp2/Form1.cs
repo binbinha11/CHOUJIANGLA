@@ -18,8 +18,13 @@ namespace WindowsFormsApp2
         int height;
         int w;
         int h;
+        int width2;
+        int height2;
+        int w2;
+        int h2;
         public static bool start = false;
         public TextureBrush Txbrus;
+        SocketAll socketAll = new SocketAll(Class1.all2, Class1.all);
         Class1 class1 = new Class1();
         List<Rectangle> l = new List<Rectangle>();
         Rectangle r;
@@ -30,11 +35,6 @@ namespace WindowsFormsApp2
             this.SetBounds((Screen.GetBounds(this).Width / 2) - (this.Width / 2),
                 (Screen.GetBounds(this).Height / 2) - (this.Height / 2),
                 this.Width, this.Height, BoundsSpecified.Location);
-            //Bitmap b = new Bitmap("C:\\Users\\lizb2\\Desktop\\1.jpg");
-            //FileStream file = new FileStream("C:\\Users\\lizb2\\Desktop\\1.jpg", FileMode.Open);
-            //Image image = Image.FromStream(file);
-            //Txbrus = new TextureBrush(b);
-            //Txbrus.WrapMode = System.Drawing.Drawing2D.WrapMode.Tile;
         }
 
         private void button1_Click(object sender, MouseEventArgs e)
@@ -52,6 +52,11 @@ namespace WindowsFormsApp2
             height = dataGridView1.Height;
             w = dataGridView1.Width / 10;
             h = dataGridView1.Height / 15;
+
+            width2 = dataGridView2.Width;
+            height2 = dataGridView2.Height;
+            w2 = dataGridView2.Width / 10;
+            h2 = dataGridView2.Height / 15;
         }
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -81,13 +86,12 @@ namespace WindowsFormsApp2
         }
         private void DatagirdView1_Paint(object sender, PaintEventArgs e)
         {
-            l = class1.ArrayToRectangle(Class1.all);
+            l = class1.ArrayToRectangle(Class1.all,25);
             this.Multiple();
             DrawGrid(width, height, w, h, e);
             foreach (Rectangle r1 in l)
             {
                 e.Graphics.FillRectangle(new SolidBrush(Color.Black), r1);
-                //e.Graphics.FillRectangle(Txbrus, r1);
             }
         }
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
@@ -125,9 +129,11 @@ namespace WindowsFormsApp2
         {
             
             this.textBox1.Text = class1.core.ToString();
+            Class1.all2 = SocketAll.array;
             if (class1.start()){
                 start = true;
                 this.dataGridView1.Refresh();
+                this.dataGridView2.Refresh();
             }
             else {
                 MessageBox.Show("OVER!");
@@ -143,6 +149,28 @@ namespace WindowsFormsApp2
             start = false;
             class1.ReStart();
             this.dataGridView1.Refresh();
+            SocketAll.CloseSocket();
+        }
+
+        private void DatagirdView2_Paint(object sender, PaintEventArgs e)
+        {
+            l = class1.ArrayToRectangle(Class1.all2, 15);
+            this.Multiple();
+            DrawGrid(width2, height2, w2, h2, e);
+            foreach (Rectangle r1 in l)
+            {
+                e.Graphics.FillRectangle(new SolidBrush(Color.Black), r1);
+            }
+        }
+
+        private void 服务端ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SocketAll.OpenSocket(true);
+        }
+
+        private void 客户端ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SocketAll.OpenSocket(false);   
         }
     }
 }
