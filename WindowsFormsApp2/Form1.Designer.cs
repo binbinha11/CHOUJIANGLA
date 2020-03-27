@@ -39,6 +39,8 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.服务端ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.客户端ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.结束服务端ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.结束接收端ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
@@ -103,7 +105,9 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.服务端ToolStripMenuItem,
-            this.客户端ToolStripMenuItem});
+            this.客户端ToolStripMenuItem,
+            this.结束服务端ToolStripMenuItem,
+            this.结束接收端ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(586, 25);
@@ -123,6 +127,20 @@
             this.客户端ToolStripMenuItem.Size = new System.Drawing.Size(56, 21);
             this.客户端ToolStripMenuItem.Text = "客户端";
             this.客户端ToolStripMenuItem.Click += new System.EventHandler(this.客户端ToolStripMenuItem_Click);
+            // 
+            // 结束服务端ToolStripMenuItem
+            // 
+            this.结束服务端ToolStripMenuItem.Name = "结束服务端ToolStripMenuItem";
+            this.结束服务端ToolStripMenuItem.Size = new System.Drawing.Size(80, 21);
+            this.结束服务端ToolStripMenuItem.Text = "结束服务端";
+            this.结束服务端ToolStripMenuItem.Click += new System.EventHandler(this.结束服务端ToolStripMenuItem_Click);
+            // 
+            // 结束接收端ToolStripMenuItem
+            // 
+            this.结束接收端ToolStripMenuItem.Name = "结束接收端ToolStripMenuItem";
+            this.结束接收端ToolStripMenuItem.Size = new System.Drawing.Size(80, 21);
+            this.结束接收端ToolStripMenuItem.Text = "结束接收端";
+            this.结束接收端ToolStripMenuItem.Click += new System.EventHandler(this.结束接收端ToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -164,6 +182,8 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem 服务端ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 客户端ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 结束服务端ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 结束接收端ToolStripMenuItem;
     }
 }
 

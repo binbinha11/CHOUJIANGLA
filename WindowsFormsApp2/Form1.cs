@@ -24,7 +24,7 @@ namespace WindowsFormsApp2
         int h2;
         public static bool start = false;
         public TextureBrush Txbrus;
-        SocketAll socketAll = new SocketAll(Class1.all2, Class1.all);
+        
         Class1 class1 = new Class1();
         List<Rectangle> l = new List<Rectangle>();
         Rectangle r;
@@ -129,7 +129,7 @@ namespace WindowsFormsApp2
         {
             
             this.textBox1.Text = class1.core.ToString();
-            Class1.all2 = SocketAll.array;
+            
             if (class1.start()){
                 start = true;
                 this.dataGridView1.Refresh();
@@ -149,7 +149,7 @@ namespace WindowsFormsApp2
             start = false;
             class1.ReStart();
             this.dataGridView1.Refresh();
-            SocketAll.CloseSocket();
+            
         }
 
         private void DatagirdView2_Paint(object sender, PaintEventArgs e)
@@ -165,12 +165,26 @@ namespace WindowsFormsApp2
 
         private void 服务端ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SocketAll.OpenSocket(true);
+            ServeSocket serveSocket = new ServeSocket(Class1.all);
+            serveSocket.Main();
+            Class1.all2 = ServeSocket.receives;
         }
 
         private void 客户端ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SocketAll.OpenSocket(false);   
+            ClientSocket clientSocket = new ClientSocket(Class1.all);
+            clientSocket.Main();
+            Class1.all2 = ClientSocket.receives;
+        }
+
+        private void 结束服务端ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ServeSocket.stop();
+        }
+
+        private void 结束接收端ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ClientSocket.stop();
         }
     }
 }
