@@ -6,15 +6,16 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.Windows.Forms;
 
-namespace ConsoleApplication_socketServer
+namespace WindowsFormsApp2
 {
-    class Program
+    class Servers
     {
         static Socket serverSocket;
         static Socket clientSocket;
         static Thread thread;
-        static void Main(string[] args)
+        static public void Start()
         {
             try
             {
@@ -22,12 +23,9 @@ namespace ConsoleApplication_socketServer
                 serverSocket = new Socket(ipep.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 serverSocket.Bind(ipep);
                 serverSocket.Listen(10);
-                while (true)
-                {
-                    clientSocket = serverSocket.Accept();
-                    thread = new Thread(new ThreadStart(doWork));
-                    thread.Start();
-                }
+                clientSocket = serverSocket.Accept();
+                thread = new Thread(new ThreadStart(doWork));
+                thread.Start();
             }
             catch
             {
@@ -41,28 +39,17 @@ namespace ConsoleApplication_socketServer
             IPEndPoint ipEndPoint = (IPEndPoint)s.RemoteEndPoint;
             String address = ipEndPoint.Address.ToString();
             String port = ipEndPoint.Port.ToString();
-            Console.WriteLine(address + ":" + port + " 连接过来了");
-            Byte[] inBuffer = new Byte[8*1024];
-            Byte[] outBuffer = new Byte[8*1024];
-            String inBufferStr;
-            String outBufferStr;
-            int[,] array = new int[15, 10];
-            for (int i = 0; i < 15; i++)
-            {
-                for (int j = 0; j < 10; j++)
-                {
-                    array[i, j] = 0;
-                }
-            }
-            array[0, 1] = array[1, 2] = array[2, 3] = array[3, 4] = array[7, 8] = array[9, 9] = 1;
-            Byte[] b = new Byte[8 * 1024];
-            b = Array2Bytes(array);
+            Byte[] inBuffer = new Byte[8 * 1024];
+            Byte[] outBuffer = new Byte[8 * 1024];
+            
             try
             {
                 while (true)
                 {
-
-                    s.Send(b, b.Length, SocketFlags.None);
+                    outBuffer = Array2Bytes(Class1.all);
+                    s.Send(outBuffer, outBuffer.Length, SocketFlags.None);
+                    s.Receive(inBuffer, 8 * 1024, SocketFlags.None);
+                    Class1.all2 = Bytes2Array(inBuffer);
                     //s.Receive(inBuffer, 1024, SocketFlags.None);//如果接收的消息为空 阻塞 当前循环 
                     //inBufferStr = Encoding.ASCII.GetString(inBuffer);
                     //Console.WriteLine(address + ":" + port + "说:");
@@ -70,7 +57,7 @@ namespace ConsoleApplication_socketServer
                     //outBufferStr = Console.ReadLine();
                     //outBuffer = Encoding.ASCII.GetBytes(outBufferStr);
                     //s.Send(outBuffer, outBuffer.Length, SocketFlags.None);
-                    Thread.Sleep(500);
+                    Thread.Sleep(100);
                 }
             }
             catch
@@ -119,6 +106,17 @@ namespace ConsoleApplication_socketServer
                 }
             }
             return vs;
+        }
+        public static void Stop() {
+            try
+            {
+                thread.Abort();
+            }
+            catch
+            {
+
+            }
+            
         }
     }
 }

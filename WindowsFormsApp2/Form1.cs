@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -44,7 +45,7 @@ namespace WindowsFormsApp2
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            timer1.Interval = 1000;
+            timer1.Interval = 100;
         }
         private void Multiple()
         {
@@ -132,6 +133,7 @@ namespace WindowsFormsApp2
             
             if (class1.start()){
                 start = true;
+                Thread.Sleep(900);
                 this.dataGridView1.Refresh();
                 this.dataGridView2.Refresh();
             }
@@ -165,26 +167,22 @@ namespace WindowsFormsApp2
 
         private void 服务端ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ServeSocket serveSocket = new ServeSocket(Class1.all);
-            serveSocket.Main();
-            Class1.all2 = ServeSocket.receives;
+            Servers.Start();
         }
 
         private void 客户端ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ClientSocket clientSocket = new ClientSocket(Class1.all);
-            clientSocket.Main();
-            Class1.all2 = ClientSocket.receives;
+            Client.Start();
         }
 
         private void 结束服务端ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ServeSocket.stop();
+            Servers.Stop();
         }
 
         private void 结束接收端ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ClientSocket.stop();
+            Client.Stop();
         }
     }
 }

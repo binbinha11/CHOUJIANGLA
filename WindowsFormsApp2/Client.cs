@@ -6,14 +6,14 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 
-namespace ConsoleApplication_socketClient
+namespace WindowsFormsApp2
 {
-    class Program
+    class Client
     {
         static Socket clientSocket;
         static Thread thread;
 
-        static void Main(string[] args)
+        static public void Start()
         {
             try
             {
@@ -25,7 +25,8 @@ namespace ConsoleApplication_socketClient
                 Console.WriteLine("链接失败");
             }
         }
-        private static void doWork() {
+        private static void doWork()
+        {
             //将网络端点表示为IP地址和端口 用于socket侦听时绑定  
             IPEndPoint ipep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 3001); //填写自己电脑的IP或者其他电脑的IP，如果是其他电脑IP的话需将ConsoleApplication_socketServer工程放在对应的电脑上。 
             clientSocket = new Socket(ipep.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
@@ -38,7 +39,6 @@ namespace ConsoleApplication_socketClient
                 Byte[] inBuffer = new Byte[8 * 1024];
                 while (true)
                 {
-                    int[,] array = new int[15, 10];
                     //发送消息  
                     //outBufferStr = Console.ReadLine();
                     //outBuffer = Encoding.ASCII.GetBytes(outBufferStr);
@@ -48,8 +48,11 @@ namespace ConsoleApplication_socketClient
                     //clientSocket.Receive(inBuffer, 1024, SocketFlags.None);//如果接收的消息为空 阻塞 当前循环 
                     //Console.WriteLine("服务器说：");
                     //Console.WriteLine(Encoding.ASCII.GetString(inBuffer));
+                    outBuffer = Array2Bytes(Class1.all);
+                    clientSocket.Send(outBuffer, outBuffer.Length, SocketFlags.None);
                     clientSocket.Receive(inBuffer, 8 * 1024, SocketFlags.None);
-                    array = Bytes2Array(inBuffer);
+                    Class1.all2 = Bytes2Array(inBuffer);
+                    Thread.Sleep(100);
                 }
             }
             catch
@@ -83,7 +86,7 @@ namespace ConsoleApplication_socketClient
                 b[i % 4] = bytes[i];
                 if (i % 4 == 3)
                 {
-                    if (x>=15||y>=10) break; 
+                    if (x >= 15 || y >= 10) break;
                     vs[x, y] = BitConverter.ToInt32(b, 0);
                     y++;
                     b[0] = 0;
@@ -98,6 +101,18 @@ namespace ConsoleApplication_socketClient
                 }
             }
             return vs;
+        }
+        public static void Stop()
+        {
+            try
+            {
+                thread.Abort();
+            }
+            catch
+            {
+
+            }
+
         }
     }
 }

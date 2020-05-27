@@ -36,7 +36,7 @@ namespace WindowsFormsApp2
         static public int[,] i = new int[2, 2] { { 1, 1 }, { 1, 1 }};
 
         public static int[,]all = new int[height, width];
-        public static int[,] all2 = new int[height, width];
+        public static int[,]all2 = new int[height, width];
         public Class1() {
             x = 0;
             y = 0;
