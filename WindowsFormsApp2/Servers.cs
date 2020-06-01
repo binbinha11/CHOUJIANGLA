@@ -23,7 +23,7 @@ namespace WindowsFormsApp2
                 serverSocket = new Socket(ipep.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 serverSocket.Bind(ipep);
                 serverSocket.Listen(10);
-                clientSocket = serverSocket.Accept();
+                //
                 thread = new Thread(new ThreadStart(doWork));
                 thread.Start();
             }
@@ -35,6 +35,7 @@ namespace WindowsFormsApp2
         }
         private static void doWork()
         {
+            clientSocket = serverSocket.Accept();
             Socket s = clientSocket;//客户端信息 
             IPEndPoint ipEndPoint = (IPEndPoint)s.RemoteEndPoint;
             String address = ipEndPoint.Address.ToString();

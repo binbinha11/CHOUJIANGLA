@@ -25,7 +25,8 @@ namespace WindowsFormsApp2
         int h2;
         public static bool start = false;
         public TextureBrush Txbrus;
-        
+        static Thread thread;
+
         Class1 class1 = new Class1();
         List<Rectangle> l = new List<Rectangle>();
         Rectangle r;
@@ -33,6 +34,7 @@ namespace WindowsFormsApp2
         public Form1()
         {
             InitializeComponent();
+            System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = false;
             this.SetBounds((Screen.GetBounds(this).Width / 2) - (this.Width / 2),
                 (Screen.GetBounds(this).Height / 2) - (this.Height / 2),
                 this.Width, this.Height, BoundsSpecified.Location);
@@ -40,12 +42,14 @@ namespace WindowsFormsApp2
 
         private void button1_Click(object sender, MouseEventArgs e)
         {
-            timer1.Start();
+            thread = new Thread(TimerDo);
+            thread.IsBackground = true;
+            thread.Start();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            timer1.Interval = 100;
+            
         }
         private void Multiple()
         {
@@ -126,28 +130,9 @@ namespace WindowsFormsApp2
             return true;
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            
-            this.textBox1.Text = class1.core.ToString();
-            
-            if (class1.start()){
-                start = true;
-                Thread.Sleep(900);
-                this.dataGridView1.Refresh();
-                this.dataGridView2.Refresh();
-            }
-            else {
-                MessageBox.Show("OVER!");
-                timer1.Stop();
-                start = false;
-            }
-            
-        }
-
         private void Button2_Click(object sender, MouseEventArgs e)
         {
-            timer1.Stop();
+            
             start = false;
             class1.ReStart();
             this.dataGridView1.Refresh();
@@ -183,6 +168,26 @@ namespace WindowsFormsApp2
         private void 结束接收端ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Client.Stop();
+        }
+        public void TimerDo(Object obj){
+            while (true) { 
+                textBox1.Text = class1.core.ToString();
+                if (class1.start())
+                {
+                    start = true;
+                    dataGridView1.Refresh();
+                    dataGridView2.Refresh();
+                }
+                else
+                {
+                    MessageBox.Show("OVER!");
+                    try {
+                        thread.Abort();
+                    }
+                    catch { }
+                }
+                Thread.Sleep(1000);
+            }
         }
     }
 }
